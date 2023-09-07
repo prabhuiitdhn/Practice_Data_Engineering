@@ -1,0 +1,60 @@
+https://www.crio.do/blog/what-is-json/
+
+[REST API IS NOTHING BUT A GUIDING PRINCIPLE FOR HOW TO USE URLS and HTTP protocols to format your API]
+
+Following data storage type mainly used in Data engineering
+1. Parquet: Binary format | No human readable | Hadoop, and Amazon shift
+2. Json file: Text format | human readable | Used everywhere
+3. CSV: text format | Human readable | used everywhere
+4. protobuf: Binay primary | no human readable | Google, Tensorflow TF records
+5. Pickle: Binary format | No human readable | Python, Pytorch serailisation
+6. Avro: Binary primary | no human readable | Hadoop
+
+
+JSON: JavaScript Object Notation
+- It is a format which can be used for interchange data.
+- The data object are stored and transmitted using Key-value pair and array data types.
+- Json data ins a language of database.
+
+Mainly used in webAPI, cloud computing, NoSQL databases, and Machine learning
+
+JSON data format used for:
+- Data storage, Configuration, Validation
+- Data transfer between API, client and server
+    * It occurs for data transfer, It does not burden the network due to its low memory demand
+
+Why JSON?
+- While handling data, data structuring is very crucial, It  makes data query more specific and easier.,
+- Readable format, lightweight, can used for an interaction between server and clients.
+- JSON is an laternative of xml, but XML is more complex.
+
+
+JSON syntax:
+- All json file could be written in curly braces [bcz it is a kind of key-value pair i.e. dictionary]
+- key is always in  { "Key": {value} }
+- always separate key and value with colon
+- to separate data; 'comma' is being used.
+- for array it should be in square bracket
+
+Example:
+{
+  "id": "String",
+  "categor": boolean,
+  "array-bytes": [1, 2, 3, 4, 'a', 'b']
+}
+
+Json utilised objects or arrays to present its data.
+
+Working with json: It uses a computing method called "serialisation" [it is a mechanisam that converts the state of a data object into a string of bits called a byte stream]
+
+The advantages of using JSON is It consumes low memory and ideal for data transfer, for transferring the data it uses serialisationa and deserialisation
+
+Practical applications of JSON
+- JSON is used in No-SQL databases [non-relational databases; This is document based databases] which stores the data in the form of queries that are converted from the accepted JSON documents.
+- These databases many used in ML for data engineering and web APIs
+
+
+Python supports JSON builtin package "json"
+import json
+json.load(): Take input as json file and return json object
+json.loads(): take input as json file and return dictory
