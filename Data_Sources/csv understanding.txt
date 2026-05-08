@@ -1,0 +1,82 @@
+https://delvinlow.medium.com/working-with-csv-files-for-data-engineers-7828ff6bb56f
+
+
+Following data storage type mainly used in Data engineering
+1. Parquet: Binary format | No human readable | Hadoop, and Amazon shift
+2. Json file: Text format | human readable | Used everywhere
+3. CSV: text format | Human readable | used everywhere
+4. protobuf: Binay primary | no human readable | Google, Tensorflow TF records
+5. Pickle: Binary format | No human readable | Python, Pytorch serailisation
+6. Avro: Binary primary | no human readable | Hadoop
+
+CSV[Comma separated values]
+
+1. CSV is a textual format, so the contents are meaningful when the files are opened. Contrary to binary formats, this is coveted and handy because both the sender and receiver of the files can peek at the records, spot problems, and rectify them quickly.
+2. CSV is a more lightweight format than JSON or XML. The headers are stored once at the top of the file instead of repeated per record like in a JSON or XML. This means that CSV file sizes are generally smaller than the other textual formats.
+3. CSV can be easily opened by many text editors and processed by many popular libraries. Many storage systems or processing frameworks such as Pandas or Spark also provide native APIs to read and write data as CSV.
+4. But CSV lack of a standard, uses special character like delimiter, quote, and escape, It does not have schema and data types, and Huge file size.
+5. CSV can not capture data types, so it depends on application for an interpreting the data as string, or byte data type.
+6. CSV files beyond a certain size are difficult to work with. due to their size, CSVs also have to be compressed and sent as ZIP files. It also takes more time to process huge CSVs compared to other file formats.Such scenarios often make me think of replacing CSV with other encoding formats such as AVRO that can handle these problems out-of-the-box.
+7. CSVs can be tricky to work with, especially for large applications.If CSV ingestion is part of the core logic of your data pipelines, I would recommend exploring the data first to determine the special cases within the data
+
+
+Basic rules for CSV:
+1. Each record is located on a separate line, delimited by a line break.
+2. There may be an optional header line appearing as the first line of the file
+3. Each line should contain the same number of fields throughout the file.
+4. The delimiter(officially comma but sometime data itself contains 'comma' so different delimiter( | ) may come) character is probably the easiest to understand. These are the characters that separate the fields (or columns) in the header and each record.
+5. the quote character ("") In CSV files, each field of a row may or may not be enclosed in a quote character. The default quote character is a double-quote. dobuble quote can be used for multiline record. which confuses the record in the row.
+6. the Escape character,  if double-quotes are used to enclose fields, then a double-quote appearing within a field must be escaped by preceding it with another double quote; The escape character is used to escape the quote character if it appears within the field value.
+
+which python package is easy to work with CSV file?
+Parsing CSV Files With the pandas Library; It is highly recommended if you have a lot of data to analyze. pandas is an open-source Python library that provides high performance data analysis tools and easy to use data structures.
+
+import pandas as pd
+df = pd.read_csv('data.csv')
+print(df.to_string()) #shows the entire data frame
+
+If you have a large DataFrame with many rows, Pandas will only return the first 5 rows, and the last 5 rows:
+
+So, to work with it, The number of rows returned is defined in Pandas option settings.
+
+You can check your system's maximum rows with the pd.options.display.max_rows statement
+
+import pandas as pd
+
+print(pd.options.display.max_rows)
+
+
+import pandas as pd
+
+pd.options.display.max_rows = 9999
+
+df = pd.read_csv('data.csv')
+
+print(df)
+
+
+writing the csv data using pandas:
+
+- take the data; convert into pandas data frame and save to csv
+
+
+import pandas as pd
+
+# list of name, degree, score
+nme = ["aparna", "pankaj", "sudhir", "Geeku"]
+deg = ["MBA", "BCA", "M.Tech", "MBA"]
+scr = [90, 40, 80, 98]
+
+# dictionary of lists
+dict = {'name': nme, 'degree': deg, 'score': scr}
+
+df = pd.DataFrame(dict)
+
+print(df)
+# saving the dataframe
+df.to_csv('file1.csv')
+
+
+
+
+

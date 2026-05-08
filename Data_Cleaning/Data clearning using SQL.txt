@@ -1,0 +1,203 @@
+https://airbyte.com/data-engineering-resources/sql-data-cleaning
+
+Data cleaning, also known as data cleansing or scrubbing, involves identifying and correcting or removing errors, inaccuracies, and other anomalies in a dataset.
+
+- Missing data: absence of values in data fields. due to data entry errors, system failures, or incomplete datasets. missing value, or a null value, can lead to biased
+- incorrect data:  Incorrect or dirty data includes erroneous, inaccurate, or invalid values. errors during data entry, faulty integration processes, or data migration issues.
+- Duplicate data: multiple instances of the same or similar records exist in a dataset. It can arise from human error, system glitches, or during integration. Duplicate data can distort analysis results and affect the accuracy of insights.
+- inconsistent data: deviates from an expected pattern or format. may include variations in naming conventions, unit conversions, date formats, or categorical values. eviated data can lead to misinterpretation and unreliable data analysis outcomes.
+- Outliers: Outliers are extreme values that significantly differ from the majority of the data points. can occur due to measurement errors or genuine anomalies. Outliers can distort statistical analysis, affecting the interpretation of results.
+
+The Impact of Poor Data Quality on Analytics and Decision-making
+- Inaccurate insights: Datasets with quality issues can lead to incorrect or biased analytical results. Decision-makers may rely on inaccurate information, leading to flawed strategies and actions.
+- Misinformed decisions: Inaccurate datasets can mislead decision-makers, leading to poor judgments and decisions. Incorrect or incomplete data can result in suboptimal outcomes and wasted resources.
+- Reduced trust and credibility: If data quality issues persist, it can erode confidence in the data and the analytics process. Stakeholders may question the reliability and validity of the insights.
+- Inefficient resource allocation: Messy data can lead to inefficient allocation of resources. Decision-makers and leaders may base their actions on unreliable information, leading to suboptimal resource allocation and missed opportunities.
+- Increased costs: Dealing with poor quality can incur additional costs. Cleaning and correcting errors requires time and effort, impacting productivity. It may also need rework or re-collection, further increasing costs
+
+SQL for Data Cleaning: Key Concepts
+SQL (Structured Query Language) is a programming language used to manage and manipulate relational databases. It is also used for data cleansing tasks due to its ability to efficiently retrieve, filter, update, and delete data.
+SQL provides a declarative approach, allowing you to specify what data you want and let the database engine handle the details of how to retrieve or modify it.
+
+SELECT statement: which retrieves data from one or more tables or views.
+    SELECT column1, column2
+    FROM table_name;
+
+WHERE clause: Filters data based on specified conditions.
+    SELECT column1, column2
+    FROM table_name
+    Where condition;
+
+DELETE statement: Removes data from a table.
+    DELETE FROM table_name
+    WHERE condition;
+
+DISTINCT keyword: Retrieves only unique/distinct values from a column.
+    SELECT DISTINCT column_name
+    FROM table_name
+
+String functions: SQL provides various string functions to manipulate and clean textual data, such as TRIM, UPPER, LOWER, and REPLACE.
+    UPDATE table_name
+    SET column_name = TRIM(column_name)
+
+    UPDATE table_name
+    SET column_name = UPPER(column_name)
+
+    UPDATE table_name
+    Set column_name = LOWER(column_name)
+
+    UPDATE table_name
+    SET column_name = REPLACE(column_name, 'old_value', 'new_value')
+
+Aggregate functions: SQL offers aggregate functions to calculate summary statistics, such as COUNT, SUM, AVG, MAX, and MIN.
+                     These functions can be useful for identifying outliers or calculating ranges.
+
+        SELECT COUNT(column_name)
+        FROM table_name;
+
+        SELECT AVG(column_name)
+        FROM table_name;
+
+        SELECT SUM(column_name)
+        FROM table_name
+
+        SELECT MAX(column_name)
+        FROM table_name
+
+        SELECT MIN(column_name)
+        FROM table_name
+
+#######################################################################################################################
+Using SQL for Data Cleaning
+
+- Removing duplicate records: Duplicates can skew analytical results. You can identify and remove repetitive records using the DISTINCT keyword or by grouping data on specific columns and selecting distinct values.
+  SELECT DISTINCT column1, column2
+  FROM table_name
+
+- Handling missing values: Null values can affect analytics. You can remove rows with a null value or impute them with valid ones. To remove rows with missing or null values
+  DELETE FROM table_name
+  WHERE column_name IS NULL
+
+To impute zero with some default value
+    UPDATE table_name
+    SET column_name = 'Defualt_value'
+    WHERE column_name IS NULL
+
+-Correcting inconsistent or invalid data: Inconsistent data can arise due to data entry errors. SQL provides string functions that can standardize and clean messy data.
+    UPDATE table_name
+    SET column_name = TRIM(column_name) #  TRIM function to remove leading and trailing spaces
+
+    # UPPER or LOWER functions to convert text to a specific case
+     UPDATE table_name
+     SET column_name = UPPER(column_name)
+
+     UPDATE table_name
+     SET column_name = LOWER(column_name)
+
+
+    # REPLACE function to replace specific characters.
+    UPDATE your_table
+    SET column_name = REPLACE(column_name, 'old_value', 'new_value');
+
+-Data normalisation: Data may have different formats across columns or tables in a database. You can use SQL functions to standardize formats.
+                    For example, you can use the TO_DATE function to convert date strings to a specific date format.
+
+      UPDATE table_name
+      SET date_column = TO_DATE(date_column, 'YYYY-MM-DD')
+
+
+- Handling outliers: Outliers and messy values can significantly impact statistical analysis.
+                     You can identify and address outliers by calculating summary statistics and then removing or
+                     adjusting values that fall outside an acceptable range.
+
+        SELECT COUNT(column_name) # check if the count is lesser than others
+        FROM table_name
+
+        SELECT MAX(Column_NAME) # Check if the value in this column is way higher than expected.
+        FROM table_name
+
+        SELECT MIN(column_name) # CHEck if the value in this column is min as expected.
+        FROM table_name
+
+-Verifying data integrity: Ensure integrity using constraints, such as primary key and foreign key constraints,
+                            to enforce relationships between tables and prevent invalid data.
+
+       ALTER TABLE table_name
+       ADD CONSTRAINT primary_key_constaint PRIMARY KEY (column1,column2)
+
+       ALTER TABLE table_name
+       ADD CONSTRAINT foreign_key_constrant FOREIGN KEY (column1)
+       REFERENCE other_table_name (column2)
+
+
+########################################################################################################################
+Implementing a Data Cleaning Process with SQL
+
+The data cleansing process typically involves several steps to identify, assess, and cleanse data. Standard steps as follows
+- Profiling and assessment:
+    Understand the data types, structure, quality, and content
+    Identify the quality such duplicate value, inconsistency and outliers
+    Using aggregate functions we can calculate statistics of data
+
+- Data validation and filtering:
+    Validate data against predefined rules or criteria
+    Filter out irrelevant or erroneous records based on specific conditions or constraints
+    Using WHERE clauses to filter out messy data based on specific conditions or constraints.
+
+-Fixing missing data:
+      Use queries to identify rows with null values
+      decide whether to remove or impute them based on your data cleansing strategy.
+      Can be used advanced techniques like regression imputation.
+
+- Standardization and transformation:
+    Standardize formats, units, or values to ensure consistency.
+    SQL functions to transform data as needed, such as converting dates, applying string manipulations, or normalizing numerical values.
+
+- Removing duplicates
+     Identify and remove duplicate values from the dataset
+     Use DISTINCT keyword in SQL to identify the duplicates
+
+- Correcting errors:
+    Employ SQL functions like TRIM, UPPER, LOWER, or REPLACE to fix inaccurate values,
+    remove extra spaces, convert text cases, or replace specific values.
+
+- Handling outliers:
+    Identify outliers using statistical techniques
+    SQL’s aggregate functions.
+    Decide whether to remove outliers or adjust their values based on the context of the data quality project.
+
+- Data integrity checks and constraints:
+    Ensure integrity by using SQL’s ALTER TABLE statement
+    add or modify primary key and foreign key constraints
+    This helps maintain data relationships and enforce consistency.
+
+
+########################################################################################################################
+
+Best practices for data cleaning with SQL
+- Understand the data
+- Document the cleaning process
+- Test query before execution
+- backup data: Use view for backing up the data
+- use transaction processing: which can help to roll back the data
+- Optimise queries: write efficient queries and consider indexing which can be used for filtering
+                    or use joining operations to improve the qeury performace
+- maintain data quality
+
+advanced SQL techniques for complex data cleaning
+- Regular expressions:  Regular expressions (regex) are powerful pattern-matching tools.
+                        They enable you to identify and manipulate data based on specific patterns,
+                        making them useful for tasks like extracting substrings, validating formats, or replacing specific patterns.
+
+- Window functions: Window functions, available in many SQL implementations, allow you to perform calculations and
+                    transformations over a specific window or subset of data. They can be helpful in scenarios like calculating running totals,
+                    identifying anomalies within a window, or filling missing values based on neighboring rows.
+
+- Recursive queries: Recursive queries, supported by some SQL databases, enable iterative processing and are helpful for hierarchical data cleaning.
+                     For example, recursive queries can address inconsistencies in hierarchical structures like product categories.
+
+- User-defined functions (UDFs): SQL allows you to create user-defined functions, which are custom functions that can be used in SQL queries.
+                                UDFs enable you to encapsulate complex data cleaning operations into reusable functions, making your cleaning tasks more modular and maintainable.
+
+- Temporal tables: Temporal tables, available in certain database systems, allow you to track and manage dataset changes over time.
+                    They can be valuable for auditing, versioning, and recovering previous states in case of errors.

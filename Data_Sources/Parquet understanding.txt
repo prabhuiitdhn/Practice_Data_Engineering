@@ -1,0 +1,81 @@
+https://airbyte.com/data-engineering-resources/parquet-data-format#parquet-vs-other-data-formats
+
+Following data storage type mainly used in Data engineering
+1. Parquet: Binary format | No human readable | Hadoop, and Amazon shift
+2. Json file: Text format | human readable | Used everywhere
+3. CSv: text format | Human readable | used everywhere
+4. protobuf: Binay primary | no human readable | Google, Tensorflow TF records
+5. Pickle: Binary format | No human readable | Python, Pytorch serailisation
+6. Avro: Binary primary | no human readable | Hadoop
+
+
+parquet:
+-It is open source file format.
+-column - Oriented storage and core features
+- For OLAP [online analytical processing] workloads, data teams focus on two main factors — storage size and query performance. Parquet can significantly reduce storage requirements and boost query response times compared to other formats like CSV.
+- Data warehousing: Parquet is commonly used in data warehousing environments, where large volumes of structured and semi-structured data are stored and analyzed.
+- Analytical Workloads: Parquet is a preferred format for analytical workloads, such as data exploration, data visualization, and machine learning.
+
+
+Apache Parquet is a columnar storage file format widely used in big data processing and analytics.
+
+Parquet is built to optimize analytical operations on large datasets containing complex data. It supports highly efficient data compression methods, schema evolution, encoding schemes, and other functionalities that can speed up analytical querying.
+
+The Parquet file format stores data in a column-oriented manner, where values from each column are stored together. This differs from row-based file formats, like CSV.
+
+Columnar storage formats offer better performance by enabling better compression and faster data retrieval. This makes them more suitable for query-intensive workloads.
+
+Parquet is also a flexible open-source file format that seamlessly integrates with big data processing tools
+
+Key features of the Parquet format
+-Columnar storage: Parquet stores data in a columnar format. This data organization makes it easier to fetch specific column values when running queries and boosts performance.
+-Compression: Parquet supports many compression algorithms, like Snappy, Gzip, and LZO. This decreases storage requirements and minimizes the amount of data that needs to be read from the disk while running queries
+-Metadata: Parquet files store column metadata and statistics, like minimum and maximum values, data types, and encoding information. Query engines and analytics tools can leverage this metadata for query optimization, automatic schema inference, and data processing.
+-Predicate pushdown: Predicate pushdown allows query engines to push filters to the storage layer. Using the feature, Parquet enables users to skip reading irrelevant data during query execution.
+-Data types: Parquet supports primitive data types (e.g., integer, float, string) but can also handle complex data structures (e.g., arrays, maps, structs) and advanced nested data structures efficiently.
+-Portability: Although Parquet works best with serverless architectures like Amazon Redshift and BigQuery, Parquet files are portable across many other frameworks and languages. They make it easier to exchange and share data between different systems.
+
+Benefits of parquet for data engineering.
+1. Efficient IO operations: arquet allows for selective column reading
+2. Better compression: run-length encoding and bit-packing algorithms for compressing the parquet file.
+3. Improved query performance:Parquet minimizes the amount of data scanned during query execution, improving query response times.
+4. Schema evolution support:Apache Parquet supports schema evolution so engineers can easily manage changing data schemas in their workflows. They can add, remove, or modify columns in Parquet files without having to rewrite the entire dataset.
+5. Compatibility with various data processing frameworks:
+
+Creating the parquet file:
+- select the programming language
+-use API or libraries “pandas.DataFrame.to_parquet()” or “pyspark.DataFrame.write.parquet()”
+- Specify the output file or directory path
+-compression algorithms
+
+Reading parquet file:
+- “pandas.read_parquet()” or “pyspark.read.parquet()”
+
+Best practice when working with Parquet:
+- Use appropriate compression: Consider factors such as compression ratio, decompression speed
+- Optimize file and row group size: The size of files and row groups must balance efficient data access and storage. Smaller file sizes can improve data locality and reduce I/O latency, but too many small files can impact performance due to increased overhead.
+- Partition and bucket data: Design your partitioning and bucketing strategy based on query patterns
+- Utilize dictionary encoding:For columns with repetitive or categorical values, enable dictionary encoding in Parquet
+- Avoid wide schema evolution: When evolving the schema, try to minimize vast schema changes that affect the data stored in a large number of columns.
+- Data type selection: Choose the most compact data types that accurately represent your data to minimize storage and boost performance.
+
+Parquet vs. CSV/Text Files
+- Parquet is a columnar format, while CSV files use row-based formats.
+- Apache Parquet provides more efficient data compression and faster query execution than a CSV file.
+- It is particularly advantageous when dealing with large datasets and complex analytical queries.
+- Parquet’s columnar organization results in faster query execution
+- CSV files are human-readable and have widespread support, but they lack Parquet’s storage and performance optimizations.
+
+
+Parquet vs. JSON
+- Parquet and JSON are fundamentally different in terms of data representation and storage.
+- Apache Parquet is a highly optimized columnar storage format.
+- JSON is a text-based format that provides human-readable data interchange.
+- While JSON is widely supported and easy to work with, it lacks the storage and performance optimizations of Parquet.
+- Parquet is used for analytical workloads, whereas JSON is often used for data interchange between systems or semi-structured data storage.
+
+
+Parquet vs. Avro
+Parquet and Avro are both binary data formats but serve different purposes.
+Apache Parquet focuses on effective data organization and compression optimized for analytical workloads. It provides high performance and storage efficiency for query-intensive use cases.
+Avro is a row-based data serialization framework emphasizing data interchange and schema evolution. It is suitable for use cases that require schema flexibility and compatibility across different programming languages.

@@ -1,0 +1,61 @@
+https://www.datacamp.com/tutorial/pickle-python-tutorial
+
+Following data storage type mainly used in Data engineering
+1. Parquet: Binary format | No human readable | Hadoop, and Amazon shift
+2. Json file: Text format | human readable | Used everywhere
+3. CSV: text format | Human readable | used everywhere
+4. protobuf: Binay primary | no human readable | Google, Tensorflow TF records
+5. Pickle: Binary format | No human readable | Python, Pytorch serailisation
+6. Avro: Binary primary | no human readable | Hadoop
+
+Object serialisation: It is the process of storing a data structure in memory so that you can load or transmit it when required without losing its current state.
+
+Serialisation: object -> Bytesteam-> file
+Deserialisation: File-> Bytestream -> Object
+
+we work with high-level data structures such as lists, tuples, and sets. However, when we want to store these objects in memory, they need to be converted into a sequence of bytes that the computer can understand. This process is called serialization.
+
+The next time we want to access the same data structure, this sequence of bytes must be converted back into the high-level object in a process known as deserialization.
+
+Why Do We Need Object Serialization?
+When dealing with more complex data types like dictionaries, data frames, and nested lists, serialization allows the user to preserve the object’s original state without losing any relevant information.
+
+Introduction to Pickle in Python
+Python’s Pickle module is a popular format used to serialize and deserialize data types. This format is native to Python, meaning Pickle objects cannot be loaded using any other programming language.
+- Unlike serialization formats like JSON, which cannot handle tuples and datetime objects, Pickle can serialize almost every commonly used built-in Python data type.
+    It also retains the exact state of the object which JSON cannot do.
+- Pickle is also a good choice when storing recursive structures since it only writes an object once.
+-Pickle allows for flexibility when deserializing objects. You can easily save different variables into a Pickle file and load them back in a different Python session,
+    recovering your data exactly the way it was without having to edit your code.
+
+- But Pickle is unsafe because it can execute malicious Python callables to construct objects. When deserializing an object, Pickle cannot tell the difference between a malicious callable and a non-malicious one. Due to this, users can end up executing arbitrary code during deserialization.
+- Pickle is a Python-specific module, and you may struggle to deserialize pickled objects when using a different language.
+- Pickle appears to be slower and produces larger serialized values than formats such as JSON and ApacheThrift.
+
+Python:
+Pickle dump(): writes the data to file.
+pickle dumps(): represents it as a byte object.
+pickle load(): reads pickled objects from a file
+pickle loads(): deserializes them from a bytes-like object.
+
+pickle.dump(obj, file, protocol=None, *, fix_imports=True, buffer_callback=None)
+pickle.dumps(obj, protocol=None, *, fix_imports=True, buffer_callback=None)
+pickle.load(file, *, fix_imports=True, encoding='ASCII', errors='strict', buffers=None)
+pickle.loads(data, /, *, fix_imports=True, encoding=”ASCII”, errors=”strict”, buffers=None)
+
+Serializing Machine Learning Models with Pickle
+- Training a machine learning model is a time-consuming process that can take hours, and sometimes even many days. It simply is not feasible to retrain an algorithm from scratch when you need to reuse or transfer it to a different environment.
+- Pickle allows you to serialize machine learning models in their existing state, making it possible to use them again as needed.
+check python file for detail.
+
+
+Increasing Python Pickle Performance For Large Objects
+- Pickle is an efficient serialization format that has often proved to be faster than JSON, XML, and HDF5 in various benchmarks.
+- When dealing with extremely large data structures or huge machine learning models, however, Pickle can slow down considerably, and serialization can become a bottleneck in your workflow.
+- but pickle performance can be increases using "PROTOCOL" argument
+    - this is used as default when saving and loading the pickle files
+    - but speed up the workflow, use  argument which is pickle's fastest available protocol
+
+- Use ‘cPickle’ instead of ‘Pickle’
+    - The ‘cPickle’ module is a faster version of ‘Pickle’ that is written in C. This makes it faster than the ‘Pickle’ library that is implemented purely in Python.
+
